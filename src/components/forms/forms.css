@@ -1,0 +1,242 @@
+/* Form layoput css */
+
+.formField {
+	margin-bottom: 1.75rem;
+	position: relative;
+}
+
+/*Form layout css ends*/
+
+/* Form label css */
+
+.formField label {
+	font-family: NeueMontrealRegular;
+	font-size: 0.875rem;
+	font-weight: 400;
+	letter-spacing: 0.005em;
+	text-align: left;
+	margin-bottom: 10px;
+	color: #677580;
+}
+
+.formField label span {
+	font-family: NeueMontrealRegular;
+	font-size: 1rem;
+	font-weight: 400;
+	letter-spacing: 0.005em;
+	text-align: left;
+	color: #d72e57;
+	margin-left: 4px;
+}
+
+/* Form label css ends */
+
+/* Form inputs css */
+
+.formField .generic-input {
+	border: 0.5px solid #a2b2bd;
+	border-radius: 2px;
+	padding: 0.5rem 0.85rem;
+	font-size: 1rem;
+	color: #121212;
+	font-family: 'NeueMontrealRegular';
+	height: auto;
+}
+
+.formField .generic-input::placeholder {
+	font-style: italic;
+	color: #a2b2bd;
+}
+
+.formField .generic-input.ant-input-password input::placeholder {
+	font-style: italic;
+	color: #a2b2bd;
+	color: #a2b2bd;
+	font-size: 1rem;
+	font-family: 'NeueMontrealRegular';
+}
+
+.formField .generic-input:focus-within {
+	box-shadow: none;
+}
+
+.formField .react-tel-input.phone-input input {
+	font-size: 1rem;
+	color: #121212;
+	font-family: 'NeueMontrealRegular';
+	height: auto;
+	padding: 0.5rem 0.85rem 0.5rem 3.5rem;
+	border-radius: 2px;
+	border: 0.5px solid #a2b2bd;
+	width: 100%;
+	line-height: inherit;
+}
+
+.formField .react-tel-input.phone-input .flag-dropdown {
+	background: transparent;
+	border-radius: 2px 0 0 2px;
+	border: 0;
+	border-right: 0.5px solid #a2b2bd;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.formField .react-tel-input.phone-input .selected-flag:hover,
+.formField .react-tel-input.phone-input .selected-flag:focus {
+	background-color: transparent;
+}
+
+@media screen and (max-width: 768px) {
+	.formField .react-tel-input.phone-input input {
+		padding: 0.5rem 0.85rem 0.5rem 4.5rem;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.formField .react-tel-input.phone-input input {
+		padding: 0.5rem 0.85rem 0.5rem 5.5rem;
+	}
+}
+
+/* Form inputs css ends */
+
+/* Forms select css */
+
+.formField .ant-select.generic-select {
+	height: auto;
+}
+
+.formField .ant-select.generic-select .ant-select-selector {
+	border: 0.5px solid #a2b2bd;
+	font-family: 'NeueMontrealRegular';
+	font-size: 1rem;
+	padding: 0.4rem 0.8rem;
+	border-radius: 2px;
+	height: auto;
+}
+
+.formField .ant-select.generic-select.ant-select-focused .ant-select-selector {
+	box-shadow: none !important;
+}
+
+.formField .ant-select.generic-select:hover .ant-select-selector {
+	border-color: #a2b2bd !important;
+}
+
+.formField
+	.ant-select.generic-select
+	.ant-select-selector
+	.ant-select-selection-placeholder {
+	font-style: italic !important;
+	color: #a2b2bd;
+	font-size: 1rem;
+	font-family: 'NeueMontrealRegular';
+}
+
+.formField .ant-select.generic-select .ant-select-arrow {
+	height: auto;
+	margin: 0;
+	top: 33%;
+}
+
+@media screen and (max-width: 552px) {
+	.formField .ant-select.generic-select .ant-select-selector {
+		padding: 0 0.8rem;
+	}
+}
+
+/* Forms select css ends */
+
+/* From error message css */
+
+.errorMsg {
+	color: red;
+	font-family: 'NeueMontrealRegular';
+	font-size: 0.875rem;
+	font-style: italic;
+	position: absolute;
+	bottom: -22px;
+}
+
+@media screen and (max-width: 768px) {
+	.errorMsg {
+		bottom: -20px;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.errorMsg {
+		bottom: -13px;
+	}
+}
+
+@media screen and (max-width: 552px) {
+	.errorMsg {
+		bottom: -11px;
+	}
+}
+
+/* Form error message css ends */
+
+/* Radio buttons */
+
+.ant-radio-group.ant-radio-group-solid.generic-radio-btns {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.ant-radio-group.ant-radio-group-solid.generic-radio-btns
+	label.ant-radio-button-wrapper {
+	background-color: #ebebeb;
+	border-radius: 6px;
+	padding: 0.5rem 1.5rem;
+	height: auto;
+	line-height: initial;
+	border: none;
+}
+
+.ant-radio-group.ant-radio-group-solid.generic-radio-btns
+	label.ant-radio-button-wrapper
+	span {
+	font-size: 1rem;
+	color: #212121;
+}
+
+.ant-radio-group.ant-radio-group-solid.generic-radio-btns
+	.ant-radio-button-wrapper.ant-radio-button-wrapper-checked {
+	background-color: #212121;
+}
+
+.ant-radio-group.ant-radio-group-solid.generic-radio-btns
+	.ant-radio-button-wrapper.ant-radio-button-wrapper-checked
+	span {
+	color: #fff;
+}
+
+.ant-radio-button-wrapper::before {
+	display: none !important;
+}
+
+/* Radio buttons css ends */
+
+/* Date Picker css */
+
+.ant-picker.generic-date-picker {
+	border: 0.5px solid #a2b2bd;
+	border-radius: 2px;
+	padding: 0.65rem 0.85rem;
+	font-size: 1rem;
+	color: #121212;
+	font-family: 'NeueMontrealRegular';
+}
+
+.ant-picker.generic-date-picker .ant-picker-input input::placeholder {
+	font-style: italic;
+	color: #a2b2bd;
+	font-size: 1rem;
+	font-family: 'NeueMontrealRegular';
+}
+
+/* Date picker css ends */

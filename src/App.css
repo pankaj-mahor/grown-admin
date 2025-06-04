@@ -1,0 +1,417 @@
+:root {
+	--primary-font: "Poppins", sans-serif;
+	--secondary-font: "Inter", sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--primary-font) !important;
+}
+p,
+span,
+a {
+	font-family: var(--secondary-font) !important;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+
+.truncate-2 {
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	display: -webkit-box;
+}
+
+.custom-radio-button.ant-radio-button-wrapper-checked {
+	outline: 5px solid #bd1f37;
+	box-shadow: 0000 4px 4px;
+	outline: 5px solid #027bff;
+	box-shadow: 2.79px 5.59px 4.38px 0px #0000005e;
+
+	border: none !important;
+	/* border-color: #bd1f37; */
+	background-color: transparent;
+}
+.custom-radio-button:hover {
+	transition: all 0.1s linear;
+	/* outline: 2px solid  #bd1f37; */
+	/* box-shadow: 4px 14px 24px #bd1f37; */
+	outline: 2px solid #027bff;
+	/* box-shadow: 2.79px 5.59px 4.38px 0px #0000005E; */
+	border: 0;
+}
+.icon-check {
+	/* display: none; */
+}
+.custom-radio-button.ant-radio-button-wrapper-checked .icon-check {
+	display: block;
+}
+.custom-radio-button-group
+	.custom-radio-button:hover
+	.custom-radio-button::before {
+	background-color: transparent !important;
+}
+.custom-radio-button-group
+	.custom-radio-button.ant-radio-button-wrapper-checked::before {
+	background-color: transparent !important;
+}
+
+/* Layout Css */
+/* Header css */
+
+.app-header {
+	box-shadow: 0px 3px 8px 0px rgba(178, 178, 178, 0.1);
+	border-bottom: 1px solid #e8e8e8;
+	padding: 1.25rem 1rem !important;
+	position: sticky !important;
+	width: 100%;
+	top: 0;
+	z-index: 10;
+}
+
+.app-header .app-logo svg {
+	width: 7rem;
+	height: auto;
+}
+
+.app-header .header-link {
+	text-decoration: none;
+	font-family: "NeueMontrealRegular";
+	color: #757575;
+	font-size: 1rem;
+	line-height: normal;
+	position: relative;
+}
+
+.app-header .header-link::after {
+	content: "";
+	display: block;
+	width: 0;
+	background-color: #bd1f37;
+	height: 3px;
+	transition: all 0.3s;
+	position: absolute;
+	top: 38px;
+}
+
+.app-header .header-link:hover,
+.app-header .header-link.active {
+	color: #353535;
+}
+
+.app-header .header-link:hover::after,
+.app-header .header-link.active::after {
+	width: 100%;
+}
+
+.rounded-50 {
+	border-radius: 50px;
+}
+
+/* Header css ends */
+
+/* Sidebar css */
+
+.app-sidebar.light {
+	--bg: white;
+	--text: #000;
+	--active-bg: #bd1f3721;
+	--hover-bg: #bd1f3721;
+	--border: 0;
+}
+
+.app-sidebar.dark {
+	--bg: #152a30;
+	--text: #fff;
+	--active-bg: #cc50638c;
+	--hover-bg: #cc50638c;
+	--border: 3px solid #cc5063;
+}
+
+.ant-layout-sider.app-sidebar {
+	max-height: calc(100vh - 65px);
+	position: sticky;
+	top: 65px;
+	background-color: var(--bg) !important;
+}
+
+.ant-layout-sider.app-sidebar .controller-btn-wrapper {
+	transition: all 0.2s;
+}
+
+.ant-layout-sider.app-sidebar .controller-btn-wrapper.show .controller-btn {
+	transform: translateX(275%);
+}
+
+.ant-layout-sider.app-sidebar
+	.controller-btn-wrapper.collapsed
+	button.controller-btn {
+	transform: translateX(0);
+}
+
+.ant-layout-sider.app-sidebar.light .ant-layout-sider-children {
+	border-right: 1px solid #e8e8e8;
+}
+
+ul.ant-menu.app-sidebar-menu {
+	background-color: var(--bg);
+}
+
+.ant-menu-submenu-title {
+	color: var(--text) !important;
+	font-weight: 500;
+}
+
+ul.ant-menu.app-sidebar-menu li.ant-menu-item.ant-menu-item-selected {
+	background-color: var(--active-bg);
+	border-radius: 5px;
+}
+
+ul.ant-menu.app-sidebar-menu li.ant-menu-item:hover {
+	background-color: var(--active-bg) !important;
+	border-radius: 5px;
+}
+
+ul.ant-menu.app-sidebar-menu
+	li.ant-menu-submenu.ant-menu-submenu-inline
+	.ant-menu-submenu-title:hover {
+	background-color: var(--active-bg) !important;
+}
+
+.app-sidebar
+	.ant-menu-light:not(.ant-menu-horizontal)
+	.ant-menu-submenu-title:active {
+	background-color: var(--hover-bg);
+}
+
+.app-sidebar ul.ant-menu.app-sidebar-menu {
+	padding: 10px 10px;
+}
+
+.app-sidebar ul.ant-menu.app-sidebar-menu li.ant-menu-item {
+	line-height: normal;
+	height: auto;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+
+.app-sidebar ul.app-sidebar-menu.ant-menu-inline-collapsed .ant-menu-item {
+	padding-inline: calc(45% - 8px - 4px) !important;
+}
+
+.app-sidebar
+	ul.app-sidebar-menu.ant-menu-inline-collapsed
+	> .ant-menu-submenu
+	> .ant-menu-submenu-title {
+	padding-inline: calc(45% - 8px - 4px) !important;
+}
+
+.app-sidebar ul.app-sidebar-menu li.ant-menu-submenu .ant-menu-submenu-title {
+	line-height: normal;
+	height: auto;
+	padding-top: 0.5rem;
+	padding-bottom: 0.5rem;
+}
+
+.app-sidebar
+	ul.app-sidebar-menu
+	li.ant-menu-submenu
+	.ant-menu-submenu-title:hover {
+	background-color: var(--hover-bg);
+}
+
+/* Styles apply to submenu */
+.ant-menu-sub.ant-menu-inline {
+	background: transparent !important;
+}
+
+.ant-menu-item.ant-menu-item-only-child {
+	white-space: pre-wrap;
+	overflow: visible !important;
+}
+
+.ant-menu-submenu.ant-menu-submenu-selected .ant-menu-submenu-title {
+	background-color: var(--active-bg);
+	border-left: var(--border);
+	border-radius: 5px;
+}
+
+.ant-menu-submenu.ant-menu-submenu-selected .ant-menu-submenu-title:hover {
+	background-color: var(--active-bg) !important;
+	border-left: var(--border);
+	border-radius: 5px;
+}
+
+ul.ant-menu.app-sidebar-menu li.ant-menu-item span.ant-menu-title-content,
+ul.ant-menu.app-sidebar-menu
+	li.ant-menu-submenu.ant-menu-submenu-inline
+	span.ant-menu-title-content {
+	color: var(--text);
+	font-family: NeueMontrealRegular;
+	font-size: 0.875rem;
+	font-weight: 400;
+}
+
+ul.ant-menu.app-sidebar-menu
+	li.ant-menu-item.ant-menu-item-selected
+	span.ant-menu-title-content {
+	font-family: NeueMontrealMedium;
+	color: var(--text);
+}
+
+ul.ant-menu.app-sidebar-menu
+	li.ant-menu-submenu.ant-menu-submenu-selected
+	span.ant-menu-title-content {
+	font-family: NeueMontrealMedium;
+	color: var(--text);
+}
+
+.collapse-button {
+	background-color: var(--bg);
+}
+.ant-layout-sider.app-sidebar button.controller-btn {
+	transition: all 0.3s;
+}
+.app-sidebar button.controller-btn {
+	transition: all 0.3s;
+}
+
+.app-sidebar button.controller-btn.collapsed svg {
+	transform: rotate(180deg);
+}
+
+.ant-layout-sider.app-sidebar button.controller-btn.collapsed svg {
+	transform: rotate(180deg);
+}
+.app-sidebar.light svg {
+	filter: brightness(10) invert(10);
+}
+
+/* Sidebar css ends */
+
+/* ######################## SIDE BAR LIGHT ######################### */
+
+/* .app-sidebar.light {
+	--bg: white;
+	--text: #000;
+	--active-bg: #F2FAFF;
+	background-color:var(--bg) !important;
+}
+
+.app-sidebar.light ul.ant-menu.app-sidebar-menu {
+	background-color: var(--bg);
+}
+.app-sidebar.light .ant-menu-submenu-title{
+	color: var(--text) !important;
+}
+.app-sidebar.light ul.ant-menu.app-sidebar-menu li.ant-menu-item.ant-menu-item-selected {
+	background-color: var(--active-bg);
+	border-left: var(--border); 
+}
+.app-sidebar.light ul.ant-menu.app-sidebar-menu li.ant-menu-item:hover{
+	background-color: var(--active-bg) !important; 
+	border-left:var(--border); 
+}
+Styles apply to submenu
+
+.app-sidebar.light .ant-menu-submenu.ant-menu-submenu-selected .ant-menu-submenu-title{
+	background-color: var(--bg);
+	border-left:var(--border);
+}
+.app-sidebar.light .ant-menu-submenu.ant-menu-submenu-selected .ant-menu-submenu-title:hover{
+	background-color: var(--active-bg) !important;
+	border-left:var(--border);
+}
+.app-sidebar.light ul.ant-menu.app-sidebar-menu li.ant-menu-item span.ant-menu-title-content {
+	color: var(--text);
+}
+.app-sidebar.light 
+ul.ant-menu.app-sidebar-menu
+	li.ant-menu-item.ant-menu-item-selected
+	span.ant-menu-title-content {
+	color: var(--text);
+}
+.app-sidebar.light svg{
+	filter: brightness(10)  invert(10);
+}
+.app-sidebar.light .collapse-button{
+	background-color: var(--bg);
+} */
+
+/* SME layout css  */
+
+.sme-layout {
+	background: #ffffff !important;
+	height: calc(100vh - 73px);
+}
+
+.ant-layout.sme-layout-outer::-webkit-scrollbar {
+	display: none;
+}
+
+/* .sme-layout-content::-webkit-scrollbar {
+	display: none;
+} */
+
+/* SME layout css ends */
+
+/* Mobile sidebar nav styles */
+
+.ant-drawer.mobile-nav-root .ant-drawer-content.mobile-nav {
+	top: 0;
+}
+
+.ant-drawer.mobile-nav-root .ant-drawer-content-wrapper {
+	width: 100% !important;
+}
+
+.ant-drawer.mobile-nav-root .ant-drawer-body {
+	padding: 0.5rem 0.5rem;
+}
+
+/* .ant-drawer.mobile-nav-root .ant-menu-submenu-arrow {
+	display: none;
+} */
+
+.ant-drawer.mobile-nav-root
+	.ant-menu-item.ant-menu-item-active.ant-menu-item-selected {
+	background-color: #fff;
+	color: #212121;
+}
+
+.ant-drawer.mobile-nav-root .ant-menu-item {
+	height: auto;
+	padding: 0.5rem 1.5rem;
+}
+
+.ant-drawer.mobile-nav-root .ant-menu-item span {
+	line-height: normal;
+	font-weight: 500;
+}
+.ant-drawer.mobile-nav-root .ant-menu-submenu .sidebar-icon.ant-menu-item-icon,
+.ant-drawer.mobile-nav-root .ant-menu-item .sidebar-icon.ant-menu-item-icon {
+	display: none !important;
+}
+
+.ant-drawer.mobile-nav-root .ant-menu-item.ant-menu-item-selected {
+	background-color: #fff;
+	color: #212121;
+}
+
+.ant-drawer.mobile-nav-root
+	.ant-menu-submenu.ant-menu-submenu-inline
+	.ant-menu-submenu-title {
+	padding: 0.5rem 1rem;
+}
+
+.ant-drawer.mobile-nav-root .ant-menu-submenu.ant-menu-submenu-inline span {
+	line-height: normal;
+}
+/* Mobile sidebar nav styles */

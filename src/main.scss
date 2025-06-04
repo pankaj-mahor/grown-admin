@@ -1,0 +1,70 @@
+.hero-header {
+	background-image: url("./assets/headerImage.jpg");
+}
+
+.card-service {
+	position: relative;
+
+	> div {
+		position: absolute;
+		inset: 0;
+		background: rgba(0, 0, 0, 0.5);
+		background: rgb(0, 0, 0);
+		background: linear-gradient(
+			0deg,
+			rgba(0, 0, 0, 1) 0%,
+			rgba(0, 0, 0, 0) 100%
+		);
+		text-align: center;
+		// display: grid;
+		display: flex;
+		flex-direction: column;
+		margin-top: auto;
+		justify-content: flex-end;
+		// place-content: center;
+		overflow: hidden;
+		border-radius: 20px;
+	}
+
+	img {
+		transition: 0.4s all linear;
+		transform: scale(1);
+		&:hover {
+			transform: scale(1.2);
+			overflow: hidden;
+		}
+	}
+	overflow: hidden;
+	&:hover {
+		> img {
+			transition: 0.4s all linear;
+
+			transform: scale(1.1);
+			overflow: hidden;
+		}
+	}
+}
+
+.merchant-box {
+	background-position: bottom;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-color: rgba(0, 0, 0, 0.75);
+
+	background-image: url("./assets/merchants.jpg");
+	background-blend-mode: multiply;
+}
+
+.service-box {
+	background-position: bottom;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-color: rgba(0, 0, 0, 0.75);
+
+	background-image: url("./assets/service.jpg");
+	background-blend-mode: multiply;
+}
+
+.left-side {
+	background-image: url("./assets/login_bg.png");
+}

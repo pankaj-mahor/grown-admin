@@ -172,7 +172,7 @@ const Banners = () => {
 					type="primary"
 					htmlType="submit"
 					loading={mutation.isLoading}
-					className="w-full"
+					className="w-full bg-[green]"
 				>
 					{mutation.isLoading ? "Submitting..." : "Create Banner"}
 				</Button>

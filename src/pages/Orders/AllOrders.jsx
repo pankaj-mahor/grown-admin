@@ -140,7 +140,7 @@ const AllOrders = () => {
 							/>
 							<div>
 								<p className="mb-0">{name}</p>
-								<p className="mb-0 text-gray-500 text-xs">Qty: {record.quantity[idx]}</p>
+								<p className="mb-0 text-gray-500 text-xs text-left">Qty: {record.quantity[idx]}</p>
 							</div>
 						</div>
 					))}
@@ -249,10 +249,35 @@ const AllOrders = () => {
 									icon={<IoIosPerson />}
 									src={selectedOrder.productImages[idx] || undefined}
 								/>
-								<div>
+								<div className="flex-1">
 									<p className="font-medium mb-1">{name}</p>
 									<p className="text-gray-600 text-sm mb-1">Qty: {selectedOrder.quantity[idx]}</p>
-									{/* Add other product details if available and needed */}
+									<div className="mt-2">
+										<Space>
+											<Select
+												defaultValue={selectedOrder.itemStatus?.[idx] || selectedOrder.status}
+												style={{ width: 200 }}
+												onChange={(value) => handleItemStatusUpdate(selectedOrder.id, idx, value)}
+												disabled={updatingStatus}
+											>
+												<Option value="Placed">Placed</Option>
+												<Option value="Processing">Processing</Option>
+												<Option value="Shipped">Shipped</Option>
+												<Option value="Delivered">Delivered</Option>
+												<Option value="Cancelled">Cancelled</Option>
+											</Select>
+											{(selectedOrder.itemStatus?.[idx] !== 'Cancelled' && selectedOrder.itemStatus?.[idx] !== 'Delivered') && (
+												<Button 
+													type="danger" 
+													size="small"
+													onClick={() => handleCancelItem(selectedOrder.id, idx)} 
+													loading={updatingStatus}
+												>
+													Cancel Item
+												</Button>
+											)}
+										</Space>
+									</div>
 								</div>
 							</div>
 						))}
@@ -262,9 +287,8 @@ const AllOrders = () => {
 						<p><strong>Total:</strong> {selectedOrder.total} {selectedOrder.currency}</p>
 						<p><strong>Payment Method:</strong> {selectedOrder.method}</p>
 						<p><strong>Order Date:</strong> {dayjs(selectedOrder.createdAt).format("YYYY-MM-DD HH:mm")}</p>
-						{/* Add other order details like shipping address, mobile, etc. if needed */}
 
-						<h5 className="text-lg font-bold mt-4 mb-3">Update Status:</h5>
+						<h5 className="text-lg font-bold mt-4 mb-3">Update Overall Order Status:</h5>
 						<Space>
 							<Select
 								defaultValue={selectedOrder.status}
@@ -284,7 +308,6 @@ const AllOrders = () => {
 								</Button>
 							)}
 						</Space>
-
 					</div>
 				</Modal>
 			)}

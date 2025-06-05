@@ -103,7 +103,7 @@ const Navbar = () => {
 			<nav className="bg-white shadow-md py-0 px-6">
 				<div className="flex justify-between items-center  mx-auto">
 					{/* Logo */}
-					<NavLink to="/" className="flex text-3xl h-20 h-[250]px">
+					<NavLink to="/" className="flex text-3xl  h-[100]px">
 						<img src={logo} alt="Grown Era Logo" className="w-full h-full" />
 					</NavLink>
 					{/* <div className="text-2xl font-bold">Exclusive</div> */}

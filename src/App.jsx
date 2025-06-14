@@ -19,6 +19,7 @@ import AllProducts from "./pages/Products/AllProducts";
 import AllOrders from "./pages/Orders/AllOrders";
 import Banners from "./pages/Products/Banners";
 import SignIn from "./pages/Auth/SignIn";
+import FlashSales from "./pages/Products/FlashSales";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -40,7 +41,7 @@ function App() {
 			{/* <RouterProvider router={router} /> */}
 			<BrowserRouter>
 				<Routes>
-					<Route path="login" element={<SignIn />}/>
+					<Route path="login" element={<SignIn />} />
 					<Route path="/" element={<DashboardLayout />}>
 						<Route index element={<Dashboard />} />
 						<Route path="home" element={<Dashboard />} />
@@ -48,6 +49,7 @@ function App() {
 						<Route path="all-products" element={<AllProducts />} />
 						<Route path="all-orders" element={<AllOrders />} />
 						<Route path="banners" element={<Banners />} />
+						<Route path="flash-sales" element={<FlashSales />} />
 					</Route>
 					{/* <Route path="/contact" element={} /> */}
 				</Routes>

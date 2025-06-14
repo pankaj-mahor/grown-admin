@@ -1,4 +1,4 @@
-import { Avatar, Modal, Table, Tag } from "antd";
+import { Avatar, Button, Input, Modal, Space, Table, Tag } from "antd";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { IoIosPerson } from "react-icons/io";
@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { logoutUser } from "../../features/user/userSlice";
 import { customFetch } from "../../utils";
 import AddProduct from "./AddProduct";
+import { CiSearch } from "react-icons/ci";
 const { confirm } = Modal;
 const AllProducts = () => {
 	const navigate = useNavigate();
@@ -123,6 +124,50 @@ const AllProducts = () => {
 					) : null}
 				</p>
 			),
+			sorter: (a, b) => a.name - b.name,
+			filterDropdown: ({
+				setSelectedKeys,
+				selectedKeys,
+				confirm,
+				clearFilters,
+			}) => (
+				<div style={{ padding: 8 }}>
+					<Input
+						placeholder="Search "
+						value={selectedKeys[0]}
+						onChange={(e) =>
+							setSelectedKeys(e.target.value ? [e.target.value] : [])
+						}
+						onPressEnter={() => confirm()}
+						style={{ width: 188, marginBottom: 8, display: "block" }}
+					/>
+					<Space>
+						<Button
+							onClick={() => clearFilters()}
+							size="small"
+							style={{ width: 90 }}
+						>
+							Reset
+						</Button>
+						<Button
+							type="primary"
+							onClick={() => confirm()}
+							icon={<CiSearch />}
+							size="small"
+							style={{ width: 90 }}
+							variant="solid"
+							color="default"
+						>
+							Search
+						</Button>
+					</Space>
+				</div>
+			),
+			filterIcon: (filtered) => (
+				<CiSearch style={{ color: filtered ? "#1890ff" : undefined }} />
+			),
+			onFilter: (value, record) =>
+				record.name.toString().toLowerCase().includes(value.toLowerCase()),
 		},
 		{
 			title: "Description",
@@ -140,6 +185,7 @@ const AllProducts = () => {
 					{record?.Stock_availble || 0}/{record?.stock_total || 0}
 				</p>
 			),
+			sorter: (a, b) => a.Stock_availble - b.Stock_availble,
 		},
 		{
 			title: "Price/MRP",
@@ -150,6 +196,7 @@ const AllProducts = () => {
 					{record?.offer_price || 0}/{record?.price || 0}
 				</p>
 			),
+			sorter: (a, b) => a.offer_price - b.offer_price,
 		},
 		{
 			title: "Category",

@@ -1,4 +1,4 @@
-import { Avatar, Table } from "antd";
+import { Avatar, Button, Input, Space, Table } from "antd";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { IoIosPerson } from "react-icons/io";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { logoutUser } from "../../features/user/userSlice";
 import { customFetch } from "../../utils";
+import { CiSearch } from "react-icons/ci";
 
 const AllUsers = () => {
 	const navigate = useNavigate();
@@ -54,9 +55,9 @@ const AllUsers = () => {
 			align: "center",
 			render: (text) => <p className="fw-500 mb-0 font-neue-medium">{text}</p>,
 			width: "3%",
-      showSorterTooltip: {
-        target: 'full-header',
-      },
+			showSorterTooltip: {
+				target: "full-header",
+			},
 		},
 		{
 			title: "Full Name",
@@ -88,6 +89,50 @@ const AllUsers = () => {
 					<span className="underline text-green-800 lh-1 ms-2">{text}</span>
 				</p>
 			),
+			sorter: (a, b) => a.name - b.name,
+			filterDropdown: ({
+				setSelectedKeys,
+				selectedKeys,
+				confirm,
+				clearFilters,
+			}) => (
+				<div style={{ padding: 8 }}>
+					<Input
+						placeholder="Search "
+						value={selectedKeys[0]}
+						onChange={(e) =>
+							setSelectedKeys(e.target.value ? [e.target.value] : [])
+						}
+						onPressEnter={() => confirm()}
+						style={{ width: 188, marginBottom: 8, display: "block" }}
+					/>
+					<Space>
+						<Button
+							onClick={() => clearFilters()}
+							size="small"
+							style={{ width: 90 }}
+						>
+							Reset
+						</Button>
+						<Button
+							type="primary"
+							onClick={() => confirm()}
+							icon={<CiSearch />}
+							size="small"
+							style={{ width: 90 }}
+							variant="solid"
+							color="default"
+						>
+							Search
+						</Button>
+					</Space>
+				</div>
+			),
+			filterIcon: (filtered) => (
+				<CiSearch style={{ color: filtered ? "#1890ff" : undefined }} />
+			),
+			onFilter: (value, record) =>
+				record.name.toString().toLowerCase().includes(value.toLowerCase()),
 		},
 		{
 			title: "Email",
@@ -126,13 +171,7 @@ const AllUsers = () => {
 			align: "center",
 			render: (text) => (
 				<p className="jobMatch fw-500 mb-0 font-neue-regular">
-					{
-						text ?
-						<>
-							{dayjs(text).format("D MMM YYYY")}
-						</>
-					:"N/A"
-					}
+					{text ? <>{dayjs(text).format("D MMM YYYY")}</> : "N/A"}
 				</p>
 			),
 		},

@@ -45,7 +45,7 @@ function SignIn() {
 
     },
     onError: (error) => {
-      
+
       console.error('Sign in failed:', error.message);
       // Handle sign-in error (e.g., show error message)
       alert('Sign in failed: ' + error.message);
@@ -57,7 +57,7 @@ function SignIn() {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: '100px auto' }} className='border borde'>
+    <div style={{ maxWidth: 400, margin: '150px auto' }} className='border p-4 rounded '>
       	<NavLink to="/" className="flex text-3xl mb-16 h-[100]px">
 						<img src={logo} alt="Grown Era Logo" className="w-full h-full" />
 					</NavLink>

@@ -90,13 +90,13 @@ const DashboardLayout = () => {
 						navigate("/flash-sales");
 					},
 				},
-				{
-					key: "5-3",
-					label: "Featured Products",
-					onClick: () => {
-						navigate("/featured");
-					},
-				},
+				// {
+				// 	key: "5-3",
+				// 	label: "Featured Products",
+				// 	onClick: () => {
+				// 		navigate("/featured");
+				// 	},
+				// },
 				{
 					key: "5-4",
 					label: "Banners",
@@ -153,8 +153,8 @@ const DashboardLayout = () => {
 							style={{
 								margin: "0.5rem",
 								overflow: "auto",
-								background:'white',
-								borderRadius: '0.5rem'
+								background: "white",
+								borderRadius: "0.5rem",
 							}}
 							className={`sme-layout-content ${""}`}
 						>

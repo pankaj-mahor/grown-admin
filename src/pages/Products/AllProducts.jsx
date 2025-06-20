@@ -137,7 +137,7 @@ const AllProducts = () => {
 						}
 					/>
 					<span className="underline text-green-800 lh-1 ms-2 capitalize">
-						{text} {record?.size}"
+						{text} {record?.size} "
 					</span>
 					{record?.is_flash ? (
 						<Tag bordered={false} color="purple" className="ms-2">

@@ -54,14 +54,14 @@ const AddProduct = ({ record, setShowEditPopup }) => {
 			price: record?.price || "",
 			offer_price: record?.offer_price || "",
 			rating: record?.rating || 0,
-			category: record?.category || null,
+			category: record?.category_id || null,
 			pot: record?.pot || false,
 			safty: record?.safty || false,
 			Stock_availble: record?.Stock_availble || "",
 			stock_total: record?.stock_total || "",
 			is_flash: record?.is_flash || false,
 			returnAvailable: record?.returnAvailable ?? true,
-			size: record?.size || "",
+			size: Number(record?.size) || "",
 		},
 	});
 

@@ -182,7 +182,7 @@ const AddProduct = ({ record, setShowEditPopup }) => {
 					</div>
 					{/* Price */}
 					<div className="mb-4 ">
-						<label className="block font-medium mb-1">Price</label>
+						<label className="block font-medium mb-1">Price (MRP)</label>
 						<Controller
 							name="price"
 							control={control}

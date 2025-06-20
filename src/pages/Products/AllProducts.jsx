@@ -228,96 +228,6 @@ const AllProducts = () => {
 				<p className=" fw-500 mb-0 font-neue-regular">{text}</p>
 			),
 		},
-		// {
-		// 	title: "Otp",
-		// 	dataIndex: "otp",
-		// 	align: "center",
-		// 	render: (text, record) => (
-		// 		<p className=" fw-500 mb-0 font-neue-regular">{text}</p>
-		// 	),
-		// },
-		// {
-		// 	title: "DOB",
-		// 	dataIndex: "dob",
-		// 	align: "center",
-		// 	render: (text) => (
-		// 		<p className="jobMatch fw-500 mb-0 font-neue-regular">
-		// 			{dayjs(text).format("D MMM YYYY")}
-		// 		</p>
-		// 	),
-		// },
-		// {
-		// 	title: 'Engagement Rate',
-		// 	dataIndex: 'isEngagementRate',
-		// 	align: 'center',
-		// 	render: (_, record) => {
-		// 		return (
-		// 			<div
-		// 				className={
-		// 					record.isEngagementRate
-		// 						? 'treandIndicaterGreen font-general-regular'
-		// 						: 'treandIndicater font-general-regular'
-		// 				}
-		// 			>
-		// 				{record.isEngagementRate ? <FaArrowUpLong /> : <FaArrowDownLong />}
-		// 				{record.engagementRate}%
-		// 			</div>
-		// 		)
-		// 	}
-		// },
-		// {
-		// 	title: 'Roadmap Progress',
-		// 	dataIndex: 'roadmapProgress',
-		// 	align: 'center',
-		// 	render: text => (
-		// 		<Progress
-		// 			className="font-neue-regular fs-6 mb-0 clr-676"
-		// 			type="circle"
-		// 			percent={text}
-		// 			strokeColor={{
-		// 				'0%': '#04702C',
-		// 				'100%': '#04702C'
-		// 			}}
-		// 			strokeWidth={12}
-		// 			size={60}
-		// 		/>
-		// 	)
-		// },
-		// {
-		// 	title: 'Status',
-		// 	dataIndex: 'status',
-		// 	render: text => (
-		// 		<Text type="success" className=" fw-500">
-		// 			{/* success, error, warning */}
-		// 			<Badge status="success" className="me-2" />
-
-		// 			{text}
-		// 		</Text>
-		// 	)
-		// },
-		// {
-		// 	title: "Location",
-		// 	dataIndex: "city",
-		// 	render: (text) => (
-		// 		<p className="fw-500  text-black font-neue-medium mb-0">{text}</p>
-		// 	),
-		// 	// width: '30%',
-		// 	align: "center",
-		// },
-		// {
-		// 	title: "Status",
-		// 	dataIndex: 'isActive',
-		// 	render: text => (
-		// 		<Pill
-		// 			className={`${text === 'active' ? 'active' : 'inactive'} fw-500  text-black font-neue-medium mb-0`}
-		// 			extraClass={text == 1 ? 'active ' : 'inactive'}
-		// 		>
-		// 			{text == 1 ? 'Active ' : 'Inactive'}
-		// 		</Pill>
-		// 	),
-		// 	// width: '30%',
-		// 	align: 'center'
-		// }
 		{
 			title: "Action",
 			dataIndex: "",
@@ -397,7 +307,10 @@ const AllProducts = () => {
 				destroyOnClose
 				width={"75%"}
 			>
-				<AddProduct record={editPopupData} />
+				<AddProduct
+					record={editPopupData}
+					setShowEditPopup={setShowEditPopup}
+				/>
 			</Modal>
 		</div>
 	);

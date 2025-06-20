@@ -11,7 +11,7 @@ import {
 	message,
 	Select,
 } from "antd";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { customFetch } from "../../utils";
 
 const { Dragger } = Upload;
@@ -36,8 +36,9 @@ const schema = yup.object().shape({
 	is_flash: yup.boolean(),
 });
 
-const AddProduct = ({ record }) => {
+const AddProduct = ({ record, setShowEditPopup }) => {
 	const queryClient = useQueryClient();
+	const isEditMode = Boolean(record && record.id);
 	const {
 		control,
 		handleSubmit,
@@ -53,13 +54,13 @@ const AddProduct = ({ record }) => {
 			price: record?.price || "",
 			offer_price: record?.offer_price || "",
 			rating: record?.rating || 0,
-			category: record?.category || "",
+			category: record?.category || null,
 			pot: record?.pot || false,
 			safty: record?.safty || false,
 			Stock_availble: record?.Stock_availble || "",
 			stock_total: record?.stock_total || "",
 			is_flash: record?.is_flash || false,
-			returnAvailable: record?.returnAvailable || true,
+			returnAvailable: record?.returnAvailable ?? true,
 			size: record?.size || "",
 		},
 	});
@@ -74,31 +75,58 @@ const AddProduct = ({ record }) => {
 					formData.append(key, value);
 				}
 			});
-			return await customFetch.post("/admin/products", formData, {
-				headers: { "Content-Type": "multipart/form-data" },
-			});
+			if (isEditMode) {
+				// PATCH for edit
+				return await customFetch.put(`/admin/products/${record.id}`, formData, {
+					headers: { "Content-Type": "multipart/form-data" },
+				});
+			} else {
+				// POST for add
+				return await customFetch.post("/admin/products", formData, {
+					headers: { "Content-Type": "multipart/form-data" },
+				});
+			}
 		},
 		onSuccess: () => {
-			message.success("Product created successfully!");
+			message.success(
+				isEditMode
+					? "Product updated successfully!"
+					: "Product created successfully!"
+			);
 			reset();
+			setShowEditPopup(false);
 			queryClient.invalidateQueries(["products"]);
 		},
 		onError: (err) => {
 			message.error(
-				err?.response?.data?.message || "Failed to create product."
+				err?.response?.data?.message ||
+					(isEditMode
+						? "Failed to update product."
+						: "Failed to create product.")
 			);
 		},
 	});
 
 	const onSubmit = (data) => {
-		mutation.mutate(data);
+		mutation.mutateAsync(data);
 	};
+
+	const {
+		data: categories,
+		isLoading,
+		error,
+	} = useQuery({
+		queryKey: ["categories"],
+		queryFn: async () => {
+			const response = await customFetch.get("/admin/categories");
+			return response.data.data;
+		},
+	});
 
 	return (
 		<div className=" mx-auto p-6 bg-white rounded shadow">
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className="grid grid-cols-2 gap-4">
-					{/* Name */}
+				<div className="grid grid-cols-4 gap-4">
 					<div className="mb-4 ">
 						<label className="block font-medium mb-1">Name</label>
 						<Controller
@@ -112,7 +140,46 @@ const AddProduct = ({ record }) => {
 							<p className="text-red-500 text-xs mt-1">{errors.name.message}</p>
 						)}
 					</div>
-
+					{/* Size  */}
+					<div className="mb-4 ">
+						<label className="block font-medium mb-1">Plant Size</label>
+						<Controller
+							name="size"
+							control={control}
+							render={({ field }) => (
+								<Select
+									options={[
+										{
+											label: "2 Inch",
+											value: 2,
+										},
+										{
+											label: "4 Inch",
+											value: 4,
+										},
+										{
+											label: "6 Inch",
+											value: 6,
+										},
+										{
+											label: "8 Inch",
+											value: 8,
+										},
+										{
+											label: "10 Inch",
+											value: 10,
+										},
+									]}
+									{...field}
+									placeholder="Enter Size"
+									className="w-full"
+								/>
+							)}
+						/>
+						{errors.size && (
+							<p className="text-red-500 text-xs mt-1">{errors.size.message}</p>
+						)}
+					</div>
 					{/* Price */}
 					<div className="mb-4 ">
 						<label className="block font-medium mb-1">Price</label>
@@ -129,57 +196,6 @@ const AddProduct = ({ record }) => {
 							</p>
 						)}
 					</div>
-
-					{/* Image */}
-					<div className="mb-4 ">
-						<label className="block font-medium mb-1">Image</label>
-						<Controller
-							name="image"
-							control={control}
-							render={({ field }) => (
-								<Dragger
-									beforeUpload={() => false}
-									maxCount={1}
-									accept="image/*"
-									fileList={field.value ? [field.value] : []}
-									onChange={(info) => {
-										console.log(info);
-										field.onChange(info.file);
-										// setValue("image", info.fileList[0]);
-										// setValue("image", info.fileList[0]);
-									}}
-								>
-									<p className="ant-upload-text">Browse files</p>
-									<p className="ant-upload-hint">
-										Drag & Drop or Choose file to upload
-									</p>
-								</Dragger>
-							)}
-						/>
-						{errors.image && (
-							<p className="text-red-500 text-xs mt-1">
-								{errors.image.message}
-							</p>
-						)}
-					</div>
-
-					{/* Description */}
-					<div className="mb-4 ">
-						<label className="block font-medium mb-1">Description</label>
-						<Controller
-							name="description"
-							control={control}
-							render={({ field }) => (
-								<Input.TextArea {...field} placeholder="Enter description" />
-							)}
-						/>
-						{errors.description && (
-							<p className="text-red-500 text-xs mt-1">
-								{errors.description.message}
-							</p>
-						)}
-					</div>
-
 					{/* Offer Price */}
 					<div className="mb-4 ">
 						<label className="block font-medium mb-1">Offer Price</label>
@@ -196,7 +212,9 @@ const AddProduct = ({ record }) => {
 							</p>
 						)}
 					</div>
+				</div>
 
+				<div className="grid grid-cols-4 gap-4">
 					{/* Rating */}
 					<div className="mb-4 ">
 						<label className="block font-medium mb-1">Rating</label>
@@ -228,7 +246,21 @@ const AddProduct = ({ record }) => {
 							name="category"
 							control={control}
 							render={({ field }) => (
-								<Input {...field} placeholder="Enter category" />
+								<Select
+									options={
+										categories &&
+										categories?.length > 0 &&
+										categories?.map((cat) => {
+											return {
+												label: cat.categoryName,
+												value: cat.id,
+											};
+										})
+									}
+									className="w-full"
+									{...field}
+									placeholder="Select category"
+								/>
 							)}
 						/>
 						{errors.category && (
@@ -271,48 +303,8 @@ const AddProduct = ({ record }) => {
 							</p>
 						)}
 					</div>
-					{/* Size  */}
-					<div className="mb-4 ">
-						<label className="block font-medium mb-1">Plant Size</label>
-						<Controller
-							name="size"
-							control={control}
-							render={({ field }) => (
-								<Select
-									options={[
-										{
-											label: "2 Inch",
-											value: 2,
-										},
-										{
-											label: "4 Inch",
-											value: 4,
-										},
-										{
-											label: "6 Inch",
-											value: 6,
-										},
-										{
-											label: "8 Inch",
-											value: 8,
-										},
-										{
-											label: "10 Inch",
-											value: 10,
-										},
-									]}
-									{...field}
-									placeholder="Enter Size"
-								/>
-							)}
-						/>
-						{errors.size && (
-							<p className="text-red-500 text-xs mt-1">{errors.size.message}</p>
-						)}
-					</div>
 				</div>
-
-				<div className="grid grid-cols-4 gap-4">
+				<div className="grid grid-cols-4 gap-4 mb-4 mt-4">
 					{/* Pot */}
 					<div className="mb-4 ">
 						<label className="block font-medium mb-1">Pot</label>
@@ -362,14 +354,76 @@ const AddProduct = ({ record }) => {
 					</div>
 				</div>
 
+				<div className="grid grid-cols-2 gap-4">
+					{/* Image */}
+					<div className="mb-4 ">
+						<label className="block font-medium mb-1">Image</label>
+						<Controller
+							name="image"
+							control={control}
+							render={({ field }) => (
+								<Dragger
+									beforeUpload={() => false}
+									maxCount={1}
+									accept="image/*"
+									fileList={field.value ? [field.value] : []}
+									onChange={(info) => {
+										console.log(info);
+										field.onChange(info.file);
+										// setValue("image", info.fileList[0]);
+										// setValue("image", info.fileList[0]);
+									}}
+								>
+									<p className="ant-upload-text">Browse files</p>
+									<p className="ant-upload-hint">
+										Drag & Drop or Choose file to upload
+									</p>
+								</Dragger>
+							)}
+						/>
+						{errors.image && (
+							<p className="text-red-500 text-xs mt-1">
+								{errors.image.message}
+							</p>
+						)}
+					</div>
+
+					{/* Description */}
+					<div className="mb-4 ">
+						<label className="block font-medium mb-1">Description</label>
+						<Controller
+							name="description"
+							control={control}
+							render={({ field }) => (
+								<Input.TextArea
+									{...field}
+									placeholder="Enter description"
+									rows={4}
+								/>
+							)}
+						/>
+						{errors.description && (
+							<p className="text-red-500 text-xs mt-1">
+								{errors.description.message}
+							</p>
+						)}
+					</div>
+				</div>
+
 				<Button
 					type="primary"
 					htmlType="submit"
 					loading={mutation.isLoading}
 					block
-					className="w-full bg-[green] mt-8"
+					className="w-full bg-[green] mt-12	"
 				>
-					{mutation.isLoading ? "Submitting..." : "Add Product"}
+					{mutation.isLoading
+						? isEditMode
+							? "Updating..."
+							: "Submitting..."
+						: isEditMode
+						? "Update Product"
+						: "Add Product"}
 				</Button>
 			</form>
 		</div>

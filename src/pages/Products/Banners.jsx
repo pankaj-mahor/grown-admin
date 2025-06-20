@@ -80,6 +80,8 @@ const Banners = () => {
 		onSuccess: () => {
 			message.success("Banner created successfully!");
 			reset();
+			setIsModalOpen(false);
+			queryClient.invalidateQueries(["banners"]);
 		},
 		onError: (err) => {
 			console.log(err);
@@ -106,7 +108,7 @@ const Banners = () => {
 		queryKey: ["banners"],
 		queryFn: async () => {
 			const response = await customFetch.get("/admin/banners");
-			return response.data;
+			return response.data?.bannersWithImageUrl;
 		},
 	});
 
@@ -267,9 +269,9 @@ const Banners = () => {
 				<div className="space-y-4">
 					{isLoading ? (
 						<div className="text-center">Loading...</div>
-					) : error ? (
+					) : banners?.length < 1 ? (
 						<div className="text-red-500 text-center">
-							Error loading banners
+							No Banners Found. Please Add one
 						</div>
 					) : (
 						banners?.map((banner) => (
@@ -300,7 +302,7 @@ const Banners = () => {
 										onClick={() => {
 											// Add toggle active/inactive mutation here
 											customFetch
-												.patch(`/admin/banners/${banner.id}/toggle-status`)
+												.patch(`/admin/banners/${banner.id}`)
 												.then(() => {
 													message.success("Banner status updated successfully");
 													queryClient.invalidateQueries(["banners"]);
@@ -308,7 +310,7 @@ const Banners = () => {
 												.catch((err) => {});
 										}}
 									>
-										{banner.is_active ? "Mark Inactive" : "Mark Active"}
+										{banner.isActive ? "Mark Inactive" : "Mark Active"}
 									</Button>
 									<Button
 										type="primary"

@@ -10,45 +10,69 @@ import { logoutUser } from "../../features/user/userSlice";
 import { customFetch } from "../../utils";
 import AddProduct from "./AddProduct";
 import { CiSearch } from "react-icons/ci";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 const { confirm } = Modal;
 const AllProducts = () => {
+	const queryClient = useQueryClient();
+
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 
 	const [loading, setLoading] = useState(false);
 	const [data, setData] = useState([]);
 
-	const getAllProducts = async () => {
-		try {
-			setLoading(true);
-			const res = await customFetch("/admin/getAllProducts");
-			const { data } = res;
-			console.log(data);
-			// setData(data?.data || []);
+	const [showEditPopup, setShowEditPopup] = useState(false);
+	const [editPopupData, setEditPopupData] = useState({});
 
+	const {
+		data: banners,
+		isLoading,
+		error,
+	} = useQuery({
+		queryKey: ["products"],
+		queryFn: async () => {
+			const response = await customFetch.get("/admin/products");
 			setData(() => {
-				return data?.data?.map((user, index) => ({
+				return response?.data?.data?.map((user, index) => ({
 					...user,
 					index: index + 1,
 				}));
 			});
-			setLoading(false);
-		} catch (error) {
-			const { response } = error;
-			const { data } = response;
+			return response.data.data;
+		},
+	});
 
-			if (data?.message.includes("Unauthorized")) {
-				navigate("/login");
-				dispatch(logoutUser());
-			} else {
-				toast.error(`${data?.message || "Try Again"}`);
-			}
-		}
-	};
+	// const getAllProducts = async () => {
+	// 	try {
+	// 		setLoading(true);
+	// 		const res = await customFetch("/admin/getAllProducts");
+	// 		const { data } = res;
+	// 		console.log(data);
+	// 		// setData(data?.data || []);
 
-	useEffect(() => {
-		getAllProducts();
-	}, []);
+	// 		setData(() => {
+	// 			return data?.data?.map((user, index) => ({
+	// 				...user,
+	// 				index: index + 1,
+	// 			}));
+	// 		});
+	// 		setLoading(false);
+	// 	} catch (error) {
+	// 		const { response } = error;
+	// 		const { data } = response;
+
+	// 		if (data?.message.includes("Unauthorized")) {
+	// 			navigate("/login");
+	// 			dispatch(logoutUser());
+	// 		} else {
+	// 			toast.error(`${data?.message || "Try Again"}`);
+	// 		}
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	getAllProducts();
+	// }, []);
 
 	const showDeleteConfirm = (id) => {
 		confirm({
@@ -69,12 +93,10 @@ const AllProducts = () => {
 
 	const deleteProduct = async (productId) => {
 		try {
-			const res = await customFetch.delete(
-				`/admin/delete-product/${productId}`
-			);
+			const res = await customFetch.delete(`/admin/products/${productId}`);
 			const { data } = res;
 			toast.success(data?.message);
-			getAllProducts();
+			queryClient.invalidateQueries(["products"]);
 		} catch (error) {
 			const { response } = error;
 			const { data } = response;
@@ -301,7 +323,16 @@ const AllProducts = () => {
 			dataIndex: "",
 			render: (text, record) => (
 				<div className="flex gap-4 items-center">
-					<button className="btn btn-xs btn-warning ">Edit</button>
+					<button
+						className="btn btn-xs btn-warning "
+						onClick={() => {
+							setEditPopupData({});
+							setShowEditPopup(true);
+							setEditPopupData(record);
+						}}
+					>
+						Edit
+					</button>
 					<button
 						className="btn btn-xs btn-error "
 						onClick={() => showDeleteConfirm(record?.id)}
@@ -353,6 +384,20 @@ const AllProducts = () => {
 				width={"75%"}
 			>
 				<AddProduct />
+			</Modal>
+			<Modal
+				title={`Edit Product - `}
+				visible={showEditPopup}
+				open={showEditPopup}
+				onCancel={() => {
+					setEditPopupData({});
+					setShowEditPopup(false);
+				}}
+				footer={null}
+				destroyOnClose
+				width={"75%"}
+			>
+				<AddProduct record={editPopupData} />
 			</Modal>
 		</div>
 	);

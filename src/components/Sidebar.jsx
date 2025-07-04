@@ -53,6 +53,7 @@ const Sidebar = ({ menus, extraClass }) => {
 				className={`app-sidebar-menu ${extraClass}`}
 				mode="inline"
 				style={{ borderRight: 0 }}
+				defaultOpenKeys={["5", "3"]}
 				items={menus}
 				selectedKeys={[selectedKey]}
 				onClick={(e) => {

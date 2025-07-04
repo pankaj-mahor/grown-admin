@@ -415,3 +415,11 @@ ul.ant-menu.app-sidebar-menu
 	line-height: normal;
 }
 /* Mobile sidebar nav styles */
+
+
+.ant-switch{
+	background-color: #ccc !important;
+}
+.ant-switch.ant-switch-checked{
+	background-color: #1677ff !important;
+}

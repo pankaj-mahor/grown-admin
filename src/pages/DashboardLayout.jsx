@@ -90,6 +90,13 @@ const DashboardLayout = () => {
 						navigate("/flash-sales");
 					},
 				},
+				{
+					key: "5-3",
+					label: "Categories",
+					onClick: () => {
+						navigate("/categories");
+					},
+				},
 				// {
 				// 	key: "5-3",
 				// 	label: "Featured Products",

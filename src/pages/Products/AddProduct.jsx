@@ -53,7 +53,7 @@ const AddProduct = ({ record, setShowEditPopup }) => {
 			description: record?.description || "",
 			price: record?.price || "",
 			offer_price: record?.offer_price || "",
-			rating: record?.rating || 0,
+			rating: record?.rating || 4.5,
 			category: record?.category_id || null,
 			pot: record?.pot || false,
 			safty: record?.safty || false,

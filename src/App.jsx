@@ -20,6 +20,7 @@ import AllOrders from "./pages/Orders/AllOrders";
 import Banners from "./pages/Products/Banners";
 import SignIn from "./pages/Auth/SignIn";
 import FlashSales from "./pages/Products/FlashSales";
+import Categories from "./pages/Products/Categories";
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -50,6 +51,7 @@ function App() {
 						<Route path="all-orders" element={<AllOrders />} />
 						<Route path="banners" element={<Banners />} />
 						<Route path="flash-sales" element={<FlashSales />} />
+						<Route path="categories" element={<Categories />} />
 					</Route>
 					{/* <Route path="/contact" element={} /> */}
 				</Routes>

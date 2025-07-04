@@ -19,25 +19,25 @@ const AllProducts = () => {
 	const dispatch = useDispatch();
 
 	const [loading, setLoading] = useState(false);
-	const [data, setData] = useState([]);
+	// const [data, setData] = useState([]);
 
 	const [showEditPopup, setShowEditPopup] = useState(false);
 	const [editPopupData, setEditPopupData] = useState({});
 
 	const {
-		data: banners,
+		data: products,
 		isLoading,
 		error,
 	} = useQuery({
 		queryKey: ["products"],
 		queryFn: async () => {
 			const response = await customFetch.get("/admin/products");
-			setData(() => {
-				return response?.data?.data?.map((user, index) => ({
-					...user,
-					index: index + 1,
-				}));
-			});
+			// setData(() => {
+			// 	return response?.data?.data?.map((user, index) => ({
+			// 		...user,
+			// 		index: index + 1,
+			// 	}));
+			// });
 			return response.data.data;
 		},
 	});
@@ -107,9 +107,11 @@ const AllProducts = () => {
 	const columns = [
 		{
 			title: "S. No.",
-			dataIndex: "index",
+			dataIndex: "id",
 			align: "center",
-			render: (text) => <p className="fw-500 mb-0 font-neue-medium">{text}</p>,
+			render: (text) => (
+				<p className="fw-500 mb-0 font-neue-medium">{text ?? `-`}</p>
+			),
 			width: "3%",
 		},
 		{
@@ -137,7 +139,7 @@ const AllProducts = () => {
 						}
 					/>
 					<span className="underline text-green-800 lh-1 ms-2 capitalize">
-						{text} {record?.size} "
+						{text} {record?.size} Inch
 					</span>
 					{record?.is_flash ? (
 						<Tag bordered={false} color="purple" className="ms-2">
@@ -277,7 +279,7 @@ const AllProducts = () => {
 			<Table
 				id="users"
 				className=""
-				dataSource={data}
+				dataSource={products}
 				columns={columns}
 				loading={loading}
 				scroll={{
@@ -288,16 +290,15 @@ const AllProducts = () => {
 
 			<Modal
 				title={`Add Product - `}
-				visible={addProductModal}
+				open={addProductModal}
 				onCancel={handleCloseModal}
 				footer={null}
 				width={"75%"}
 			>
-				<AddProduct />
+				<AddProduct setShowEditPopup={setAddProductModal} />
 			</Modal>
 			<Modal
 				title={`Edit Product - `}
-				visible={showEditPopup}
 				open={showEditPopup}
 				onCancel={() => {
 					setEditPopupData({});
